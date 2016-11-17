@@ -93,6 +93,8 @@ hi StatusLine ctermbg=lightgreen ctermfg=grey
 
 let mapleader = "\<Space>"
 
+let g:haskell_enable_arrowsyntax = 1 " to enable highlighting of `proc`
+
 " vim-rspec setup
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
