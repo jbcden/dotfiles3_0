@@ -1,0 +1,177 @@
+# Basic ubuntu bashrc with some addons based on examples from: "From Bash to Zshell".
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# prevent unmatched patterns being passed to commands -- see bash to zshell p. 208
+# somehow disables tab completion...
+# shopt -s nullglob
+
+HISTFILE=~/.bash_history
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+      . /usr/share/bash-completion/bash_completion
+
+# get current branch in git repo
+function parse_git_branch() {
+BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+if [ ! "${BRANCH}" == "" ]
+then
+  STAT=`parse_git_dirty`
+  echo "[${BRANCH}${STAT}]"
+else
+  echo ""
+fi
+}
+
+# get current status of git repo
+function parse_git_dirty {
+status=`git status 2>&1 | tee`
+dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+bits=''
+if [ "${renamed}" == "0" ]; then
+  bits=">${bits}"
+fi
+if [ "${ahead}" == "0" ]; then
+  bits="*${bits}"
+fi
+if [ "${newfile}" == "0" ]; then
+  bits="+${bits}"
+fi
+if [ "${untracked}" == "0" ]; then
+  bits="?${bits}"
+fi
+if [ "${deleted}" == "0" ]; then
+  bits="x${bits}"
+fi
+if [ "${dirty}" == "0" ]; then
+  bits="!${bits}"
+fi
+if [ ! "${bits}" == "" ]; then
+  echo " ${bits}"
+else
+  echo ""
+fi
+}
+
+last_migration(){
+    vim db/migrate/$(ls db/migrate/ | sort | tail -1)
+}
+
+function docker-connect() {
+  eval "$(docker-machine env $1)"
+}
+
+# docker-osx-dev
+function docker_init() {
+  eval "$(boot2docker shellinit)"
+}
+
+function docker_clean() {
+  docker images -q --filter "dangling=true" | xargs docker rmi --force
+  docker ps -q -a | xargs docker rm --force
+}
+
+function ag-rails() {
+  ag $1 --ignore spec --ignore features --ignore doc --ignore db --ignore config
+}
+
+function add_to_path() {
+  export PATH="$PATH:$(pwd)/bin"
+}
+
+function adb_install_all() {
+  adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {} install $1
+}
+
+function source_bash() {
+  source ~/.bashrc
+}
+
+function resque() {
+  QUEUE=* bundle exec rake environment resque:work
+}
+
+alias ap=add_to_path
+alias dc=docker-compose
+
+export PS1="\[\e[0;31m\]\w:\[\e[m\]\[\e[0;36m\]\`parse_git_branch\`\[\e[m\]\n"
+
+
+# have history not save consecutive duplicate or lines starting with whitespace.
+HISTCONTROL=ignoreboth
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+  xterm-color) color_prompt=yes;;
+esac
+
+# some more ls aliases
+alias ls='ls -G'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+
+export TERM=xterm-256color
+source ~/.aliases
+
+PATH="$PATH:/Users/jchae/bin"
+PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/"
+PATH="$PATH:/Users/jchae/software/context/tex/texmf-osx-64/bin"
+# PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/psql -p5432"
+
+# this is for running rubinius
+# PATH="/Users/jchae/.rubies/rbx-2.5.8/bin:$PATH"
+
+export GIT_EDITOR=vim
+export EDITOR=vim
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+PATH=$PATH:/Users/jchae/.multirust/toolchains/stable/cargo/bin
+PATH=$PATH:/Users/jchae/.cargo/bin
+
+export RUST_SRC_PATH=/Users/jchae/software/rust/src
+export CARGO_HOME=/Users/jchae/.cargo
+
+export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
+
+export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
+
+source ~/.bashrc.local
+
+# Dinghy configs
+export DOCKER_HOST=tcp://192.168.99.100:2376
+export DOCKER_CERT_PATH=/Users/jchae/.docker/machine/machines/dinghy
+export DOCKER_TLS_VERIFY=1
+export DOCKER_MACHINE_NAME=dinghy
+export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0066/share/vim/vim80/
+
+# Initialize kiex if installed
+test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"

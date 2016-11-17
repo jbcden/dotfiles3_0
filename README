@@ -1,0 +1,2 @@
+Need to create aliases for history -w and history -r.
+These commands allow for the history to be shared between two sessions in bash.
