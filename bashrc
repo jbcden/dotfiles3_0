@@ -137,12 +137,14 @@ if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
 
-export TERM=xterm-256color
+if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
+#export TERM=xterm-256color
 source ~/.aliases
 
 PATH="$PATH:/Users/jchae/bin"
 PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/"
 PATH="$PATH:/Users/jchae/software/context/tex/texmf-osx-64/bin"
+PATH="$PATH:/Users/jchae/.cargo/bin/racer"
 # PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/psql -p5432"
 
 # this is for running rubinius
