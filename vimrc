@@ -2,8 +2,8 @@ set nocompatible
 set relativenumber
 set number
 set hidden " For vim-racer -- need to see why
+set t_Co=256
 syntax on
-colorscheme pablo
 
 set laststatus=2  " Always display the status line
 set showcmd " display incomplete commands
@@ -64,9 +64,13 @@ Bundle 'mattn/gist-vim'
 Bundle 'ElmCast/elm-vim'
 Bundle 'neovimhaskell/haskell-vim'
 Bundle 'scrooloose/syntastic'
+Plugin 'dikiaap/minimalist'
 
 call vundle#end()
 filetype plugin indent on
+
+colorscheme minimalist
+set background=dark
 
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
