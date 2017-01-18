@@ -2,8 +2,6 @@ set nocompatible
 set relativenumber
 set number
 set hidden " For vim-racer -- need to see why
-set t_Co=256
-syntax on
 
 set laststatus=2  " Always display the status line
 set showcmd " display incomplete commands
@@ -45,8 +43,11 @@ call vundle#begin()
 
 " Plugins
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'neomake/neomake'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'slashmili/alchemist.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-bundler'
@@ -55,22 +56,23 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'tpope/vim-dispatch'
 Plugin 'thoughtbot/vim-rspec'
-Plugin 'rust-lang/rust.vim'
-Plugin 'elixir-lang/vim-elixir'
-Bundle 'kchmck/vim-coffee-script'
 Plugin 'racer-rust/vim-racer'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
-Bundle 'ElmCast/elm-vim'
-Bundle 'neovimhaskell/haskell-vim'
-Bundle 'scrooloose/syntastic'
 Plugin 'dikiaap/minimalist'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'sbdchd/neoformat'
 
 call vundle#end()
 filetype plugin indent on
 
-colorscheme minimalist
+syntax enable
 set background=dark
+colorscheme minimalist
+
+autocmd! BufWritePost * Neomake
+let g:gutentags_cache_dir = '~/.tags_cache'
+let g:alchemist_tag_disable = 1
 
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
@@ -83,6 +85,11 @@ set background=dark
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
+
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre * Neoformat
+" augroup END
 
 let g:rspec_command = 'Dispatch rspec {spec}'
 
