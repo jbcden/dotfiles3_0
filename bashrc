@@ -158,6 +158,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 PATH=$PATH:/Users/jchae/.multirust/toolchains/stable/cargo/bin
 PATH=$PATH:/Users/jchae/.cargo/bin
+PATH=$PATH:/Users/jchae/.cabal/bin
 
 export RUST_SRC_PATH=/Users/jchae/software/rust/src
 export CARGO_HOME=/Users/jchae/.cargo
