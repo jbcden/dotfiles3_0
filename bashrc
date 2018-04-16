@@ -12,6 +12,10 @@ HISTFILE=~/.bash_history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
+
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
       . /usr/share/bash-completion/bash_completion
@@ -61,6 +65,27 @@ if [ ! "${bits}" == "" ]; then
 else
   echo ""
 fi
+}
+
+# Misc functions
+function weather() {
+  curl wttr.in/$1
+}
+
+
+function run_until_pass() {
+  while true; do
+    $1
+    if [ $? -eq 0 ]; then
+      break
+    fi
+  done
+}
+
+function run_until_fail() {
+  while true; do
+    $1
+  done
 }
 
 last_migration(){
@@ -150,15 +175,19 @@ PATH="$PATH:/Users/jchae/.cargo/bin/racer"
 # this is for running rubinius
 # PATH="/Users/jchae/.rubies/rbx-2.5.8/bin:$PATH"
 
-export GIT_EDITOR=vim
-export EDITOR=vim
+export GIT_EDITOR=nvim
+export EDITOR=nvim
+alias vim=nvim
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin:/usr/local/bin
 PATH=$PATH:/Users/jchae/.multirust/toolchains/stable/cargo/bin
 PATH=$PATH:/Users/jchae/.cargo/bin
 PATH=$PATH:/Users/jchae/.cabal/bin
+
+# Android
+export PATH=$PATH:/Users/jchae/Library/Android/sdk:/Users/jchae/Library/Android/sdk/build-tools:/Users/jchae/Library/Android/sdk/platform-tools:/Users/jchae/Library/Android/sdk/tools
 
 export RUST_SRC_PATH=/Users/jchae/software/rust/src
 export CARGO_HOME=/Users/jchae/.cargo
@@ -170,11 +199,16 @@ export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 source ~/.bashrc.local
 
 # Dinghy configs
-export DOCKER_HOST=tcp://192.168.99.100:2376
-export DOCKER_CERT_PATH=/Users/jchae/.docker/machine/machines/dinghy
-export DOCKER_TLS_VERIFY=1
-export DOCKER_MACHINE_NAME=dinghy
-export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0066/share/vim/vim80/
+# export DOCKER_HOST=tcp://192.168.99.100:2376
+# export DOCKER_CERT_PATH=/Users/jchae/.docker/machine/machines/dinghy
+# export DOCKER_TLS_VERIFY=1
+# export DOCKER_MACHINE_NAME=dinghy
+
+# VIM 8
+# export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0237/share/vim/vim80/
 
 # Initialize kiex if installed
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+
+export ERL_AFLAGS="-kernel shell_history enabled"
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src

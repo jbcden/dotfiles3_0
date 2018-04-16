@@ -23,7 +23,7 @@
 	ctags = !.git/hooks/ctags
 
 [core]
-	excludesfile = /Users/jchae/.gitignore_global
+	excludesfile = /Users/jchae/.gitignore
   autocrlf = input
 [merge]
   #ff = only
