@@ -14,7 +14,7 @@ for name in *; do
   fi
 done
 
-if [ ! -e "$target" ]; then
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-fi
-vim -u ~/.vimrc +BundleInstall +qa
+# if [ ! -e "$target" ]; then
+#   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# fi
+# vim -u ~/.vimrc +BundleInstall +qa
