@@ -12,9 +12,8 @@ HISTFILE=~/.bash_history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-if [ -f ~/.git-completion.bash ]; then
-    . ~/.git-completion.bash
-fi
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
@@ -166,14 +165,14 @@ if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
 #export TERM=xterm-256color
 source ~/.aliases
 
-PATH="$PATH:/Users/jchae/bin"
+PATH="$PATH:/Users/jacobc/bin"
 PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/"
-PATH="$PATH:/Users/jchae/software/context/tex/texmf-osx-64/bin"
-PATH="$PATH:/Users/jchae/.cargo/bin/racer"
+PATH="$PATH:/Users/jacobc/software/context/tex/texmf-osx-64/bin"
+PATH="$PATH:/Users/jacobc/.cargo/bin/racer"
 # PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/psql -p5432"
 
 # this is for running rubinius
-# PATH="/Users/jchae/.rubies/rbx-2.5.8/bin:$PATH"
+# PATH="/Users/jacobc/.rubies/rbx-2.5.8/bin:$PATH"
 
 export GIT_EDITOR=nvim
 export EDITOR=nvim
@@ -182,15 +181,15 @@ alias vim=nvim
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 export PATH=$PATH:/usr/local/opt/go/libexec/bin:/usr/local/bin
-PATH=$PATH:/Users/jchae/.multirust/toolchains/stable/cargo/bin
-PATH=$PATH:/Users/jchae/.cargo/bin
-PATH=$PATH:/Users/jchae/.cabal/bin
+PATH=$PATH:/Users/jacobc/.multirust/toolchains/stable/cargo/bin
+PATH=$PATH:/Users/jacobc/.cargo/bin
+PATH=$PATH:/Users/jacobc/.cabal/bin
 
 # Android
-export PATH=$PATH:/Users/jchae/Library/Android/sdk:/Users/jchae/Library/Android/sdk/build-tools:/Users/jchae/Library/Android/sdk/platform-tools:/Users/jchae/Library/Android/sdk/tools
+export PATH=$PATH:/Users/jacobc/Library/Android/sdk:/Users/jacobc/Library/Android/sdk/build-tools:/Users/jacobc/Library/Android/sdk/platform-tools:/Users/jacobc/Library/Android/sdk/tools
 
-export RUST_SRC_PATH=/Users/jchae/software/rust/src
-export CARGO_HOME=/Users/jchae/.cargo
+export RUST_SRC_PATH=/Users/jacobc/software/rust/src
+export CARGO_HOME=/Users/jacobc/.cargo
 
 export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
@@ -200,7 +199,7 @@ source ~/.bashrc.local
 
 # Dinghy configs
 # export DOCKER_HOST=tcp://192.168.99.100:2376
-# export DOCKER_CERT_PATH=/Users/jchae/.docker/machine/machines/dinghy
+# export DOCKER_CERT_PATH=/Users/jacobc/.docker/machine/machines/dinghy
 # export DOCKER_TLS_VERIFY=1
 # export DOCKER_MACHINE_NAME=dinghy
 
@@ -211,4 +210,4 @@ source ~/.bashrc.local
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 
 export ERL_AFLAGS="-kernel shell_history enabled"
-export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
+if which rustc > /dev/null; then export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src; fi
