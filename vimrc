@@ -2,9 +2,7 @@ set nocompatible
 set relativenumber
 set number
 set hidden " For vim-racer -- need to see why
-
-let g:racer_cmd = "/Users/jchae/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+lang en_US.UTF-8
 
 set laststatus=2  " Always display the status line
 set showcmd " display incomplete commands
@@ -22,7 +20,7 @@ set secure " disable unsafe commands in local vimrcs
 set hlsearch
 set ruler
 " set cursorline
-set cursorcolumn
+" set cursorcolumn
 
 set colorcolumn=80
 
@@ -70,33 +68,45 @@ runtime macros/matchit.vim
 " 
 " call vundle#end()
 
+let g:deoplete#enable_at_startup = 1
+
 filetype plugin indent on
 
 set packpath^=~/.vim
+" set packpath^=~/.vim/pack/minpac/start
 packadd minpac
 call minpac#init()
 
+" TODO: Add install instructions for deoplete -- required python3 and
+" additional python packages.
+call minpac#add('Shougo/deoplete.nvim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('neomake/neomake')
 call minpac#add('tpope/vim-surround')
-call minpac#add('tpope/vim-repeat')
+" call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('sbdchd/neoformat')
 call minpac#add('ngmy/vim-rubocop')
 call minpac#add('kana/vim-textobj-user')
-call minpac#add('nelstrom/vim-textobj-rubyblock')
+call minpac#add('dikiaap/minimalist')
+" call minpac#add('nelstrom/vim-textobj-rubyblock')
 call minpac#add('rust-lang/rust.vim')
 call minpac#add('racer-rust/vim-racer')
 call minpac#add('keith/swift.vim')
 call minpac#add('ElmCast/elm-vim')
+call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('slim-template/vim-slim')
+call minpac#add('endel/vim-github-colorscheme')
 
 syntax enable
-set background=dark
-" colorscheme minimalist
+" set background=dark
+"  colorscheme minimalist
+set background=light
+ colorscheme morning
 " colorscheme delek
-colorscheme slate
+" colorscheme slate
 
 " Neomake
 " disable Neomake checks for Java -- this currently isn't setup correctly and
@@ -180,8 +190,32 @@ nnoremap <leader>= :wincmd =<cr>
 map <space>l :Git! log<cr>gg
 nnoremap <c-F> yiw <ESC>:Git commit --fixup=<c-r>"<cr>
 
-" Rust
+" Rust racer configs
+" let g:racer_cmd = '/Users/jacobc/.cargo/bin/racer'
+let g:racer_experimental_completer = 1
+
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+function! CamelcaseToSnakecase(str)
+  let l:snake_case = substitute(a:str, '\(\<\u\l\+\|\l\+\)\(\u\)', '\l\1_\l\2', 'g')
+  return substitute(snake_case, '[A-Z]', '\L&', 'g')
+endfunction
+
+function! CompileElmToJavascript()
+  let l:snakecase_filename = CamelcaseToSnakecase(expand('%:r'))
+  let l:compiled_filename = snakecase_filename . '.js'
+  execute '!elm-make ' . expand('%') . ' --output ' . compiled_filename
+endfunction
+
+function! CompileElmToHtml()
+  let l:snakecase_filename = CamelcaseToSnakecase(expand('%:r'))
+  let l:compiled_filename = snakecase_filename . '.html'
+  execute '!elm-make ' . expand('%') . ' --output ' . compiled_filename
+endfunction
+
+" Elm
+au FileType elm nmap <leader>cj :call CompileElmToJavascript()<CR>
+au FileType elm nmap <leader>ch :call CompileElmToHtml()<CR>
