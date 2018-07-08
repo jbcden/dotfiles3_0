@@ -20,7 +20,8 @@
   lp  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset' --pretty=format:'%Cblue%gd%Cred: %C(yellow)%s'q
   pfl = push --force-with-lease
   pancake = !git fetch && git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})
-	ctags = !.git/hooks/ctags
+  fix = "!f() { vim -p `git diff --name-only | uniq`; }; f"
+  ctags = !.git/hooks/ctags
 
 [core]
 	excludesfile = /Users/jchae/.gitignore
@@ -37,7 +38,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [init]
 	templatedir = ~/.git_template
