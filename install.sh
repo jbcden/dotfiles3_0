@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for name in *; do
+for name in $(ls configs/); do
   target="$HOME/.$name"
   if [ -e "$target" ]; then
     if [ ! -L "$target" ]; then
@@ -9,10 +9,13 @@ for name in *; do
   else
     if [ "$name" != 'install.sh' ] && [ "$name" != 'README.md' ]; then
       echo "Creating $target"
-      ln -s "$PWD/$name" "$target"
+      ln -s "$PWD/configs/$name" "$target"
     fi
   fi
 done
+
+mkdir ~/.config/nvim
+ln -s $PWD/init.vim ~/.config/nvim/init.vim
 
 # if [ ! -e "$target" ]; then
 #   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
