@@ -22,7 +22,12 @@ set ruler
 " set cursorline
 " set cursorcolumn
 
+let mapleader = "\<Space>"
+
 set colorcolumn=80
+
+set inccommand=nosplit
+set undodir=~/.vim/undodir
 
 " Fixes some issues with backspace -- not sure why these were occurring,
 " furthur investigation is needed.
@@ -37,37 +42,6 @@ set list listchars=tab:»·,trail:·
 " Enable Matchit
 runtime macros/matchit.vim
 
-" Vundle setup
-" filetype off
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
-
-" Plugins
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'sheerun/vim-polyglot'
-" Plugin 'neomake/neomake'
-" Plugin 'ludovicchabant/vim-gutentags'
-" Plugin 'slashmili/alchemist.vim'
-" Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'tpope/vim-surround'
-" Plugin 'tpope/vim-repeat'
-" Plugin 'tpope/vim-bundler'
-" Plugin 'tpope/vim-fugitive'
-" Plugin 'kana/vim-textobj-user'
-" Plugin 'nelstrom/vim-textobj-rubyblock'
-" Plugin 'tpope/vim-dispatch'
-" Plugin 'thoughtbot/vim-rspec'
-" Plugin 'racer-rust/vim-racer'
-" Bundle 'mattn/webapi-vim'
-" Bundle 'mattn/gist-vim'
-" Plugin 'dikiaap/minimalist'
-" Plugin 'altercation/vim-colors-solarized'
-" Plugin 'sbdchd/neoformat'
-" Plugin 'ngmy/vim-rubocop'
-" Plugin 'avakhov/vim-yaml'
-" 
-" call vundle#end()
-
 let g:deoplete#enable_at_startup = 1
 
 filetype plugin indent on
@@ -77,10 +51,10 @@ set packpath^=~/.vim
 packadd minpac
 call minpac#init()
 
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 " TODO: Add install instructions for deoplete -- required python3 and
 " additional python packages.
 call minpac#add('Shougo/deoplete.nvim')
-call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('neomake/neomake')
 call minpac#add('tpope/vim-surround')
 " call minpac#add('tpope/vim-repeat')
@@ -99,6 +73,7 @@ call minpac#add('ElmCast/elm-vim')
 call minpac#add('altercation/vim-colors-solarized')
 call minpac#add('slim-template/vim-slim')
 call minpac#add('endel/vim-github-colorscheme')
+call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
 
 syntax enable
 " set background=dark
@@ -107,6 +82,16 @@ set background=light
  colorscheme morning
 " colorscheme delek
 " colorscheme slate
+
+let g:LanguageClient_serverCommands = {
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <leader> gd :call LanguageClient#textDocument_hover()<CR>
+nnoremap <leader> j :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " Neomake
 " disable Neomake checks for Java -- this currently isn't setup correctly and
@@ -117,6 +102,10 @@ autocmd! BufWritePost * if index(blacklist, &ft) < 0 | Neomake
 let g:gutentags_cache_dir = '~/.tags_cache'
 let g:alchemist_tag_disable = 1
 
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
 if executable("rg")
   set grepprg=rg\ --vimgrep\ --no-heading\ -i
   set grepformat=%f:%l:%c:%m,%f:%l:%m
@@ -124,22 +113,7 @@ if executable("rg")
   let g:ctrlp_use_caching = 0
 endif
 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
 let g:rustfmt_autosave = 1
-
-" let g:syntastic_mode_map = { 'passive_filetypes': ['html', 'cucumber', 'java', 'javascript'], 'mode': 'active' }
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" augroup fmt
-"   autocmd!
-"   autocmd BufWritePre * Neoformat
-" augroup END
 
 let g:rspec_command = 'Dispatch rspec {spec}'
 
@@ -151,10 +125,6 @@ let g:rspec_command = 'Dispatch rspec {spec}'
 " let g:ctrlp_user_command = 'rg %s --files --hidden --follow -g "!.git/*"'
 
 hi StatusLine ctermbg=lightgreen ctermfg=grey
-
-let mapleader = "\<Space>"
-
-let g:haskell_enable_arrowsyntax = 1 " to enable highlighting of `proc`
 
 " vim-rspec setup
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -192,12 +162,12 @@ nnoremap <c-F> yiw <ESC>:Git commit --fixup=<c-r>"<cr>
 
 " Rust racer configs
 " let g:racer_cmd = '/Users/jacobc/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
-
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+" let g:racer_experimental_completer = 1
+" 
+" au FileType rust nmap gd <Plug>(rust-def)
+" au FileType rust nmap gs <Plug>(rust-def-split)
+" au FileType rust nmap gx <Plug>(rust-def-vertical)
+" au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 function! CamelcaseToSnakecase(str)
   let l:snake_case = substitute(a:str, '\(\<\u\l\+\|\l\+\)\(\u\)', '\l\1_\l\2', 'g')
