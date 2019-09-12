@@ -66,6 +66,14 @@ else
 fi
 }
 
+function g() {
+  if [[ $# -gt 0 ]]; then
+    git "$@"
+  else
+    git status --branch
+  fi
+}
+
 # Misc functions
 function weather() {
   curl wttr.in/$1
