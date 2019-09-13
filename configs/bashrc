@@ -74,6 +74,8 @@ function g() {
   fi
 }
 
+__git_complete g _git
+
 # Misc functions
 function weather() {
   curl wttr.in/$1
