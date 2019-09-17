@@ -29,14 +29,13 @@
 [merge]
   #ff = only
 	tool = kdiff3
-[include]
-  path = .gitconfig.local
 [user]
 	name = Jacob Chae
 	email = jbcden@gmail.com
+[include]
+  path = ~/.gitconfig.local
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
