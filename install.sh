@@ -14,7 +14,7 @@ for name in $(ls configs/); do
   fi
 done
 
-mkdir ~/.config/nvim
+mkdir -p ~/.config/nvim
 ln -s $PWD/init.vim ~/.config/nvim/init.vim
 
 # if [ ! -e "$target" ]; then

@@ -205,7 +205,9 @@ export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
 export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
-source ~/.bashrc.local
+if [ -f ~/.bashrc.local ]; then
+  source ~/.bashrc.local
+fi
 
 # Dinghy configs
 # export DOCKER_HOST=tcp://192.168.99.100:2376
