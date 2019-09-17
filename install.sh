@@ -27,6 +27,8 @@ fi
 # Dependency for deoplete autocomplete plugin
 pip3 install --user pynvim
 
+mkdir -p ~/.psql
+
 # if [ ! -e "$target" ]; then
 #   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 # fi
