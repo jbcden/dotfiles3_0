@@ -13,7 +13,8 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
