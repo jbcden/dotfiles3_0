@@ -24,6 +24,8 @@ set ruler
 
 let mapleader = "\<Space>"
 
+nnoremap ,, <c-^>
+
 set colorcolumn=80
 
 set inccommand=nosplit
