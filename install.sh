@@ -21,11 +21,17 @@ if ! [ -x "$(command -v git)" ]; then
   echo 'Error: git is not installed.' >&2
   exit 1
 else
-  git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+  if ! [ -e ~/.vim/pack/minpac/opt/minpac ]; then
+    git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+  fi
 fi
 
 # Dependency for deoplete autocomplete plugin
-pip3 install --user pynvim
+if [ -x "$(command -v pip3)" ]; then
+  pip3 install --user pynvim
+else
+  echo "pip is not installed, vim deoplete will not be usable until this is fixed"
+fi
 
 mkdir -p ~/.psql
 
