@@ -73,10 +73,12 @@ call minpac#add('dikiaap/minimalist')
 call minpac#add('endel/vim-github-colorscheme')
 
 syntax enable
+set background=light
+colorscheme morning
+
+" Settings for a dark theme
 " set background=dark
 "  colorscheme minimalist
-set background=light
- colorscheme morning
 
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
