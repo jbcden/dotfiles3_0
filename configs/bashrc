@@ -206,6 +206,10 @@ export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
 export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
+if [ -f ~/.bash_functions.sh ]; then
+  source ~/.bash_functions.sh
+fi
+
 if [ -f ~/.bashrc.local ]; then
   source ~/.bashrc.local
 fi
