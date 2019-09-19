@@ -76,6 +76,7 @@ call minpac#add('altercation/vim-colors-solarized')
 call minpac#add('slim-template/vim-slim')
 call minpac#add('endel/vim-github-colorscheme')
 call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
+call minpac#add('jparise/vim-graphql')
 
 syntax enable
 " set background=dark
