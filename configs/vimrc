@@ -43,8 +43,6 @@ set list listchars=tab:»·,trail:·
 " Enable Matchit
 runtime macros/matchit.vim
 
-let g:deoplete#enable_at_startup = 1
-
 filetype plugin indent on
 
 set packpath^=~/.vim
@@ -83,6 +81,7 @@ set background=light
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
     \ }
+let g:deoplete#enable_at_startup = 1
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
