@@ -16,4 +16,13 @@ for name in $(ls configs/); do
   fi
 done
 
+# Dependency for deoplete autocomplete plugin
+if [ -x "$(command -v pip3)" ]; then
+  pip3 install --user pynvim
+else
+  echo "pip is not installed, vim deoplete will not be usable until this is fixed"
+fi
+
 mkdir -p ~/.psql
+
+vim -u ~/.vimrc +PackInitInstall

@@ -69,6 +69,10 @@ fi
 
 export PS1="\[\e[0;31m\]\w:\[\e[m\]\[\e[0;36m\]\`parse_git_branch\`\[\e[m\]\n"
 
+# If you use neovim this will be different. I like to use the normal vim
+# location so I override this option.
+export MYVIMRC=~/.vimrc
+
 # have history not save consecutive duplicate or lines starting with whitespace.
 HISTCONTROL=ignoreboth
 

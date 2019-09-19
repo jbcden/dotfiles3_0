@@ -159,3 +159,5 @@ nnoremap <leader>= :wincmd =<cr>
 
 " Fixups with Fugitive
 map <space>l :Git! log<cr>gg
+
+command! PackInitInstall packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'qa'})
