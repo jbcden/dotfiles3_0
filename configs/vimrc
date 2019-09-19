@@ -73,10 +73,12 @@ call minpac#add('endel/vim-github-colorscheme')
 " call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
 
 syntax enable
+set background=light
+colorscheme morning
+
+" Settings for a dark theme
 " set background=dark
 "  colorscheme minimalist
-set background=light
- colorscheme morning
 
 let g:deoplete#enable_at_startup = 1
 
