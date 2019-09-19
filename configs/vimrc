@@ -64,11 +64,13 @@ call minpac#add('ngmy/vim-rubocop')
 call minpac#add('kana/vim-textobj-user')
 call minpac#add('racer-rust/vim-racer')
 call minpac#add('slim-template/vim-slim')
-call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
 call minpac#add('jparise/vim-graphql')
 " Additional colorschemes
 call minpac#add('dikiaap/minimalist')
 call minpac#add('endel/vim-github-colorscheme')
+" Language server implementation for vim -- requires a bit more advanced setup
+" and customization
+" call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
 
 syntax enable
 " set background=dark
@@ -76,16 +78,17 @@ syntax enable
 set background=light
  colorscheme morning
 
-let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
-    \ }
 let g:deoplete#enable_at_startup = 1
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-nnoremap <leader>kj :call LanguageClient#textDocument_hover()<CR>
-nnoremap <leader>j :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" let g:LanguageClient_serverCommands = {
+"     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+"     \ }
+" 
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" " Or map each action separately
+" nnoremap <leader>kj :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <leader>j :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " Neomake
 " disable Neomake checks for Java -- this currently isn't setup correctly and
