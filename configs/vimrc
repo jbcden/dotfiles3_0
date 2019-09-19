@@ -98,6 +98,9 @@ let blacklist = ['java']
 highlight NeomakeWarning ctermfg=227 ctermbg=237
 autocmd! BufWritePost * if index(blacklist, &ft) < 0 | Neomake
 
+" This allows vim to remember the line you were last on when you reopen a
+" file. You can read a bit more about this at:
+" https://askubuntu.com/questions/202075/how-do-i-get-vim-to-remember-the-line-i-was-on-when-i-reopen-a-file#202077
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
