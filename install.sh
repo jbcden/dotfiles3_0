@@ -1,5 +1,7 @@
 #!/bin/sh
 
+git submodule update --remote
+
 for name in $(ls configs/); do
   target="$HOME/.$name"
   if [ -e "$target" ]; then
