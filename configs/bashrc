@@ -67,80 +67,7 @@ else
 fi
 }
 
-function g() {
-  if [[ $# -gt 0 ]]; then
-    git "$@"
-  else
-    git status --branch
-  fi
-}
-
-__git_complete g _git
-
-# Misc functions
-function weather() {
-  curl wttr.in/$1
-}
-
-
-function run_until_pass() {
-  while true; do
-    $1
-    if [ $? -eq 0 ]; then
-      break
-    fi
-  done
-}
-
-function run_until_fail() {
-  while true; do
-    $1
-  done
-}
-
-last_migration(){
-    vim db/migrate/$(ls db/migrate/ | sort | tail -1)
-}
-
-function docker-connect() {
-  eval "$(docker-machine env $1)"
-}
-
-# docker-osx-dev
-function docker_init() {
-  eval "$(boot2docker shellinit)"
-}
-
-function docker_clean() {
-  docker images -q --filter "dangling=true" | xargs docker rmi --force
-  docker ps -q -a | xargs docker rm --force
-}
-
-function ag-rails() {
-  ag $1 --ignore spec --ignore features --ignore doc --ignore db --ignore config
-}
-
-function add_to_path() {
-  export PATH="$PATH:$(pwd)/bin"
-}
-
-function adb_install_all() {
-  adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {} install $1
-}
-
-function source_bash() {
-  source ~/.bashrc
-}
-
-function resque() {
-  QUEUE=* bundle exec rake environment resque:work
-}
-
-alias ap=add_to_path
-alias dc=docker-compose
-
 export PS1="\[\e[0;31m\]\w:\[\e[m\]\[\e[0;36m\]\`parse_git_branch\`\[\e[m\]\n"
-
 
 # have history not save consecutive duplicate or lines starting with whitespace.
 HISTCONTROL=ignoreboth
@@ -157,55 +84,27 @@ case "$TERM" in
   xterm-color) color_prompt=yes;;
 esac
 
-# some more ls aliases
-alias ls='ls -G'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
+# ~/.aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
+if [ -f ~/.aliases ]; then
+  source ~/.aliases
 fi
 
 if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
-#export TERM=xterm-256color
-source ~/.aliases
 
 PATH="$PATH:/Users/jacobc/bin"
-PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/"
-PATH="$PATH:/Users/jacobc/software/context/tex/texmf-osx-64/bin"
-PATH="$PATH:/Users/jacobc/.cargo/bin/racer"
-# PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/psql -p5432"
 
-# this is for running rubinius
-# PATH="/Users/jacobc/.rubies/rbx-2.5.8/bin:$PATH"
 
 export GIT_EDITOR=nvim
 export EDITOR=nvim
 alias vim=nvim
 
+# rbenv setup
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which rbenv > /dev/null; then export PATH="$HOME/.rbenv/bin:$PATH"; fi
-
-export PATH=$PATH:/usr/local/opt/go/libexec/bin:/usr/local/bin
-PATH=$PATH:/Users/jacobc/.multirust/toolchains/stable/cargo/bin
-PATH=$PATH:/Users/jacobc/.cargo/bin
-PATH=$PATH:/Users/jacobc/.cabal/bin
-
-# Android
-export PATH=$PATH:/Users/jacobc/Library/Android/sdk:/Users/jacobc/Library/Android/sdk/build-tools:/Users/jacobc/Library/Android/sdk/platform-tools:/Users/jacobc/Library/Android/sdk/tools
-
-export RUST_SRC_PATH=/Users/jacobc/software/rust/src
-export CARGO_HOME=/Users/jacobc/.cargo
-
-export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
-
-export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
 if [ -f ~/.bash_functions.sh ]; then
   source ~/.bash_functions.sh
@@ -214,18 +113,3 @@ fi
 if [ -f ~/.bashrc.local ]; then
   source ~/.bashrc.local
 fi
-
-# Dinghy configs
-# export DOCKER_HOST=tcp://192.168.99.100:2376
-# export DOCKER_CERT_PATH=/Users/jacobc/.docker/machine/machines/dinghy
-# export DOCKER_TLS_VERIFY=1
-# export DOCKER_MACHINE_NAME=dinghy
-
-# VIM 8
-# export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0237/share/vim/vim80/
-
-# Initialize kiex if installed
-test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
-
-export ERL_AFLAGS="-kernel shell_history enabled"
-if which rustc > /dev/null; then export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src; fi

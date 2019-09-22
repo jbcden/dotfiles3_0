@@ -1,7 +1,7 @@
 set nocompatible
 set relativenumber
 set number
-set hidden " For vim-racer -- need to see why
+set hidden
 lang en_US.UTF-8
 
 set laststatus=2  " Always display the status line
@@ -19,21 +19,20 @@ set exrc
 set secure " disable unsafe commands in local vimrcs
 set hlsearch
 set ruler
-" set cursorline
-" set cursorcolumn
 
 let mapleader = "\<Space>"
 
+" Easy jump back to last open file
 nnoremap ,, <c-^>
 
+" I like to keep lines less than 80 characters
 set colorcolumn=80
 
 set inccommand=nosplit
 set undodir=~/.vim/undodir
 
-" Fixes some issues with backspace -- not sure why these were occurring,
-" furthur investigation is needed.
 set backspace=2
+
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
@@ -49,7 +48,6 @@ let g:deoplete#enable_at_startup = 1
 filetype plugin indent on
 
 set packpath^=~/.vim
-" set packpath^=~/.vim/pack/minpac/start
 packadd minpac
 call minpac#init()
 
@@ -66,25 +64,21 @@ call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('sbdchd/neoformat')
 call minpac#add('ngmy/vim-rubocop')
 call minpac#add('kana/vim-textobj-user')
-call minpac#add('dikiaap/minimalist')
-" call minpac#add('nelstrom/vim-textobj-rubyblock')
 call minpac#add('rust-lang/rust.vim')
 call minpac#add('racer-rust/vim-racer')
-call minpac#add('keith/swift.vim')
 call minpac#add('ElmCast/elm-vim')
-call minpac#add('altercation/vim-colors-solarized')
 call minpac#add('slim-template/vim-slim')
-call minpac#add('endel/vim-github-colorscheme')
 call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
 call minpac#add('jparise/vim-graphql')
+" Additional colorschemes
+call minpac#add('dikiaap/minimalist')
+call minpac#add('endel/vim-github-colorscheme')
 
 syntax enable
 " set background=dark
 "  colorscheme minimalist
 set background=light
  colorscheme morning
-" colorscheme delek
-" colorscheme slate
 
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
@@ -102,8 +96,6 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 let blacklist = ['java']
 highlight NeomakeWarning ctermfg=227 ctermbg=237
 autocmd! BufWritePost * if index(blacklist, &ft) < 0 | Neomake
-let g:gutentags_cache_dir = '~/.tags_cache'
-let g:alchemist_tag_disable = 1
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -116,16 +108,7 @@ if executable("rg")
   let g:ctrlp_use_caching = 0
 endif
 
-let g:rustfmt_autosave = 1
-
 let g:rspec_command = 'Dispatch rspec {spec}'
-
-" Ctrl-p setup with Ag
-" let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-" let g:ctrlp_use_caching = 0
-
-" let g:ctrlp_user_command = 'rg --files --no-ignore --hidden --follow -g ""'
-" let g:ctrlp_user_command = 'rg %s --files --hidden --follow -g "!.git/*"'
 
 hi StatusLine ctermbg=lightgreen ctermfg=grey
 
@@ -163,14 +146,6 @@ nnoremap <leader>= :wincmd =<cr>
 map <space>l :Git! log<cr>gg
 nnoremap <c-F> yiw <ESC>:Git commit --fixup=<c-r>"<cr>
 
-" Rust racer configs
-" let g:racer_cmd = '/Users/jacobc/.cargo/bin/racer'
-" let g:racer_experimental_completer = 1
-" 
-" au FileType rust nmap gd <Plug>(rust-def)
-" au FileType rust nmap gs <Plug>(rust-def-split)
-" au FileType rust nmap gx <Plug>(rust-def-vertical)
-" au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 function! CamelcaseToSnakecase(str)
   let l:snake_case = substitute(a:str, '\(\<\u\l\+\|\l\+\)\(\u\)', '\l\1_\l\2', 'g')
