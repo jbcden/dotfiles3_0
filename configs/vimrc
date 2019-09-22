@@ -1,0 +1,194 @@
+set nocompatible
+set relativenumber
+set number
+set hidden " For vim-racer -- need to see why
+lang en_US.UTF-8
+
+set laststatus=2  " Always display the status line
+set showcmd " display incomplete commands
+set nowrap
+set nobackup
+set nowritebackup
+set noswapfile " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set history=1000
+set expandtab
+set tabstop=2 shiftwidth=2 softtabstop=2
+set autoindent
+set omnifunc=syntaxcomplete#Complete
+set exrc
+set secure " disable unsafe commands in local vimrcs
+set hlsearch
+set ruler
+" set cursorline
+" set cursorcolumn
+
+let mapleader = "\<Space>"
+
+nnoremap ,, <c-^>
+
+set colorcolumn=80
+
+set inccommand=nosplit
+set undodir=~/.vim/undodir
+
+" Fixes some issues with backspace -- not sure why these were occurring,
+" furthur investigation is needed.
+set backspace=2
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
+
+" Enable Matchit
+runtime macros/matchit.vim
+
+let g:deoplete#enable_at_startup = 1
+
+filetype plugin indent on
+
+set packpath^=~/.vim
+" set packpath^=~/.vim/pack/minpac/start
+packadd minpac
+call minpac#init()
+
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+" TODO: Add install instructions for deoplete -- required python3 and
+" additional python packages.
+call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+call minpac#add('neomake/neomake')
+call minpac#add('tpope/vim-surround')
+" call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-unimpaired')
+call minpac#add('ctrlpvim/ctrlp.vim')
+call minpac#add('sbdchd/neoformat')
+call minpac#add('ngmy/vim-rubocop')
+call minpac#add('kana/vim-textobj-user')
+call minpac#add('dikiaap/minimalist')
+" call minpac#add('nelstrom/vim-textobj-rubyblock')
+call minpac#add('rust-lang/rust.vim')
+call minpac#add('racer-rust/vim-racer')
+call minpac#add('keith/swift.vim')
+call minpac#add('ElmCast/elm-vim')
+call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('slim-template/vim-slim')
+call minpac#add('endel/vim-github-colorscheme')
+call minpac#add('autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' })
+call minpac#add('jparise/vim-graphql')
+
+syntax enable
+" set background=dark
+"  colorscheme minimalist
+set background=light
+ colorscheme morning
+" colorscheme delek
+" colorscheme slate
+
+let g:LanguageClient_serverCommands = {
+    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <leader>kj :call LanguageClient#textDocument_hover()<CR>
+nnoremap <leader>j :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" Neomake
+" disable Neomake checks for Java -- this currently isn't setup correctly and
+" causes vim to hang for a while.
+let blacklist = ['java']
+highlight NeomakeWarning ctermfg=227 ctermbg=237
+autocmd! BufWritePost * if index(blacklist, &ft) < 0 | Neomake
+let g:gutentags_cache_dir = '~/.tags_cache'
+let g:alchemist_tag_disable = 1
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
+if executable("rg")
+  set grepprg=rg\ --vimgrep\ --no-heading\ -i
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+let g:rustfmt_autosave = 1
+
+let g:rspec_command = 'Dispatch rspec {spec}'
+
+" Ctrl-p setup with Ag
+" let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+" let g:ctrlp_use_caching = 0
+
+" let g:ctrlp_user_command = 'rg --files --no-ignore --hidden --follow -g ""'
+" let g:ctrlp_user_command = 'rg %s --files --hidden --follow -g "!.git/*"'
+
+hi StatusLine ctermbg=lightgreen ctermfg=grey
+
+" vim-rspec setup
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+
+" Clear search highlighting
+nmap <leader>h :let @/=''<CR>
+
+" Sane navigation for wrapped lines
+nmap j gj
+nmap k gk
+
+nmap 0 ^
+
+nmap <leader>vi :tabe $MYVIMRC<cr>
+nmap <leader>so :source $MYVIMRC<cr>
+
+" Map original '0' behavior to <leader>0
+nmap <leader>0 <HOME>
+
+autocmd Filetype help nmap <buffer> q :q<CR>
+
+" Automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+" Zoom a vim split
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
+" Fixups with Fugitive
+map <space>l :Git! log<cr>gg
+nnoremap <c-F> yiw <ESC>:Git commit --fixup=<c-r>"<cr>
+
+" Rust racer configs
+" let g:racer_cmd = '/Users/jacobc/.cargo/bin/racer'
+" let g:racer_experimental_completer = 1
+" 
+" au FileType rust nmap gd <Plug>(rust-def)
+" au FileType rust nmap gs <Plug>(rust-def-split)
+" au FileType rust nmap gx <Plug>(rust-def-vertical)
+" au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+function! CamelcaseToSnakecase(str)
+  let l:snake_case = substitute(a:str, '\(\<\u\l\+\|\l\+\)\(\u\)', '\l\1_\l\2', 'g')
+  return substitute(snake_case, '[A-Z]', '\L&', 'g')
+endfunction
+
+function! CompileElmToJavascript()
+  let l:snakecase_filename = CamelcaseToSnakecase(expand('%:r'))
+  let l:compiled_filename = snakecase_filename . '.js'
+  execute '!elm-make ' . expand('%') . ' --output ' . compiled_filename
+endfunction
+
+function! CompileElmToHtml()
+  let l:snakecase_filename = CamelcaseToSnakecase(expand('%:r'))
+  let l:compiled_filename = snakecase_filename . '.html'
+  execute '!elm-make ' . expand('%') . ' --output ' . compiled_filename
+endfunction
+
+" Elm
+au FileType elm nmap <leader>cj :call CompileElmToJavascript()<CR>
+au FileType elm nmap <leader>ch :call CompileElmToHtml()<CR>

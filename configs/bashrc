@@ -12,6 +12,10 @@ HISTFILE=~/.bash_history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
+
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
       . /usr/share/bash-completion/bash_completion
@@ -61,6 +65,37 @@ if [ ! "${bits}" == "" ]; then
 else
   echo ""
 fi
+}
+
+function g() {
+  if [[ $# -gt 0 ]]; then
+    git "$@"
+  else
+    git status --branch
+  fi
+}
+
+__git_complete g _git
+
+# Misc functions
+function weather() {
+  curl wttr.in/$1
+}
+
+
+function run_until_pass() {
+  while true; do
+    $1
+    if [ $? -eq 0 ]; then
+      break
+    fi
+  done
+}
+
+function run_until_fail() {
+  while true; do
+    $1
+  done
 }
 
 last_migration(){
@@ -141,40 +176,56 @@ if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
 #export TERM=xterm-256color
 source ~/.aliases
 
-PATH="$PATH:/Users/jchae/bin"
+PATH="$PATH:/Users/jacobc/bin"
 PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/"
-PATH="$PATH:/Users/jchae/software/context/tex/texmf-osx-64/bin"
-PATH="$PATH:/Users/jchae/.cargo/bin/racer"
+PATH="$PATH:/Users/jacobc/software/context/tex/texmf-osx-64/bin"
+PATH="$PATH:/Users/jacobc/.cargo/bin/racer"
 # PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/psql -p5432"
 
 # this is for running rubinius
-# PATH="/Users/jchae/.rubies/rbx-2.5.8/bin:$PATH"
+# PATH="/Users/jacobc/.rubies/rbx-2.5.8/bin:$PATH"
 
-export GIT_EDITOR=vim
-export EDITOR=vim
+export GIT_EDITOR=nvim
+export EDITOR=nvim
+alias vim=nvim
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null; then export PATH="$HOME/.rbenv/bin:$PATH"; fi
 
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-PATH=$PATH:/Users/jchae/.multirust/toolchains/stable/cargo/bin
-PATH=$PATH:/Users/jchae/.cargo/bin
-PATH=$PATH:/Users/jchae/.cabal/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin:/usr/local/bin
+PATH=$PATH:/Users/jacobc/.multirust/toolchains/stable/cargo/bin
+PATH=$PATH:/Users/jacobc/.cargo/bin
+PATH=$PATH:/Users/jacobc/.cabal/bin
 
-export RUST_SRC_PATH=/Users/jchae/software/rust/src
-export CARGO_HOME=/Users/jchae/.cargo
+# Android
+export PATH=$PATH:/Users/jacobc/Library/Android/sdk:/Users/jacobc/Library/Android/sdk/build-tools:/Users/jacobc/Library/Android/sdk/platform-tools:/Users/jacobc/Library/Android/sdk/tools
+
+export RUST_SRC_PATH=/Users/jacobc/software/rust/src
+export CARGO_HOME=/Users/jacobc/.cargo
 
 export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
 export R_HOME='/usr/local/Cellar/r/3.2.2_1/R.framework/Resources'
 
-source ~/.bashrc.local
+if [ -f ~/.bash_functions.sh ]; then
+  source ~/.bash_functions.sh
+fi
+
+if [ -f ~/.bashrc.local ]; then
+  source ~/.bashrc.local
+fi
 
 # Dinghy configs
-export DOCKER_HOST=tcp://192.168.99.100:2376
-export DOCKER_CERT_PATH=/Users/jchae/.docker/machine/machines/dinghy
-export DOCKER_TLS_VERIFY=1
-export DOCKER_MACHINE_NAME=dinghy
-export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0066/share/vim/vim80/
+# export DOCKER_HOST=tcp://192.168.99.100:2376
+# export DOCKER_CERT_PATH=/Users/jacobc/.docker/machine/machines/dinghy
+# export DOCKER_TLS_VERIFY=1
+# export DOCKER_MACHINE_NAME=dinghy
+
+# VIM 8
+# export VIMRUNTIME=/usr/local/Cellar/vim/8.0.0237/share/vim/vim80/
 
 # Initialize kiex if installed
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+
+export ERL_AFLAGS="-kernel shell_history enabled"
+if which rustc > /dev/null; then export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src; fi

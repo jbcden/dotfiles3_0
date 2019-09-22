@@ -25,3 +25,20 @@ function maintree {
 
   cd $workspace/$repo_name
 }
+
+function kenv() {
+  kubectl config current-context
+}
+
+function kubeshell {
+  if [[ $# -eq 0 ]]; then
+    echo "A context must be specified for this fuction to work"
+    exit 1
+  fi
+
+  kubectl config use-context $1
+
+  pod_id=$(kubectl get po | ag rails | head -1 | cut -d' ' -f1)
+
+  kubectl exec -ti $pod_id -- bash
+}

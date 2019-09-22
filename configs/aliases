@@ -76,3 +76,5 @@ alias muses='cd /home/jchae/rails_projects/muses'
 
 # headless cucumber
 alias zhc='zeus cucumber HEADLESS=true'
+
+alias vim='nvim'
