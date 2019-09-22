@@ -105,6 +105,16 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 
+" Use the silver searcher `ag` for vim grep and ctrl-p. Much faster than the
+" default for large projects
+" if executable("ag")
+"   set grepprg=ag\ --nogroup\ --nocolor
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"   let g:ctrlp_use_caching = 0
+" endif
+
+" Same as above but uses `rg` -- can be much faster than `ag` in certain
+" cases.
 if executable("rg")
   set grepprg=rg\ --vimgrep\ --no-heading\ -i
   set grepformat=%f:%l:%c:%m,%f:%l:%m
