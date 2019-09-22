@@ -1,17 +1,9 @@
 # Unix
-alias tlf="tail -f"
-alias ln='ln -v'
 alias mkdir='mkdir -p'
-alias ..='cd ../'
-alias ...='../..'
-alias l='ls'
-alias la='ls -a'
-alias ll='ls -al'
-alias lh='ls -Alh'
-# alias -g G='| grep'
-# alias -g M='| less'
-# alias -g L='| wc -l'
-# alias -g ONE="| awk '{ print \$1}'"
+alias l='ls -CF'
+alias ls='ls -G'
+alias ll='ls -alF'
+alias la='ls -A'
 alias e="$EDITOR"
 alias v="$VISUAL"
 
@@ -23,58 +15,12 @@ alias vi='vim'
 alias tls='tmux ls'
 alias tat='tmux a -t'
 
-# ctags
-# alias ctags="`brew --prefix`/bin/ctags"
-
-# git
-alias gci="git pull --rebase && rake && git push"
-alias gco='git checkout'
-
 # Bundler
 alias b="bundle"
-
-# Tests and Specs
-alias t="ruby -I test"
-alias cuc="bundle exec cucumber"
-alias rt="rake test"
-
-# Rubygems
-alias gi="gem install"
-alias giv="gem install -v"
-
-# Rails
-alias migrate="rake db:migrate db:rollback && rake db:migrate db:test:prepare"
-alias m="migrate"
-alias rk="rake"
-alias s="rspec"
-alias z="zeus"
-alias zc="zeus cucumber -r features"
 alias be="bundle exec"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
-# ssh
-alias dante='ssh jchae@solfado.com'
-alias dev='ssh dev@sadpanda.pw'
-alias occs='ssh jchae@occs.cs.oberlin.edu'
-alias coop='ssh jchae@oberlin.co'
-alias bb='ssh jchae@onecard.csr.oberlin.edu'
-alias graphics='ssh graphics@ip-173-180.main.oberlin.edu'
-alias railsdev='ssh -L 3012:solfado.com:3005 jchae@occs.cs.oberlin.edu'
-alias staff='gvfs-mount afp://jchae@staffserver.cc.oberlin.edu/STAFFSERVER'
-alias taen='ssh taen@solfado.com'
-alias jchae='ssh jchae@132.162.201.239'
-alias ovid='ssh jchae@162.243.47.40'
-alias odev='ssh dev@162.243.47.40'
-
-# mount staffserver
-alias resed='ncpmount -S .linux-cluster_STAFFSERVER_VOL.Servers.Oberlin -A staffserver.cc.oberlin.edu -o tcp -V STAFFSERVER_VOL -U jchae.students.oberlin -C /home/jchae/staffserver'
-
-# directory mappings
-alias muses='cd /home/jchae/rails_projects/muses'
-
-# headless cucumber
-alias zhc='zeus cucumber HEADLESS=true'
-
-alias vim='nvim'
+# If you use neovim instead of stock vim
+# alias vim='nvim'

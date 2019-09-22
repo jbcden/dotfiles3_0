@@ -24,20 +24,16 @@
   ctags = !.git/hooks/ctags
 
 [core]
-	excludesfile = /Users/jchae/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
 [merge]
-  #ff = only
 	tool = kdiff3
 [user]
-	name = Jacob Chae
-	email = jbcden@gmail.com
+	name = YOUR_NAME
+	email = YOUR_EMAIL
 [include]
   path = ~/.gitconfig.local
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [init]
 	templatedir = ~/.git_template
