@@ -1,31 +1,5 @@
 #!/bin/bash
 
-function worktree {
-  local work_dirs=/Users/jchae/worktree
-  local new_tree=$1
-  local base_branch=$2
-  echo $base_branch
-
-  if [ -z $base_branch ]; then
-    base_branch=origin/master
-  fi
-
-  echo $base_branch
-  # git worktree add -b $new_tree $work_dirs/$new_tree
-
-  # cd $work_dirs/$new_tree
-}
-
-# need to include the repo name as part of the directory name
-# this will help avoid confusion when trying to locate feature branches and make it
-# easier to implement working tree
-function maintree {
-  local workspace=/Users/jchae/md
-  local repo_name=`basename "$PWD"`
-
-  cd $workspace/$repo_name
-}
-
 function kenv() {
   kubectl config current-context
 }
@@ -42,3 +16,67 @@ function kubeshell {
 
   kubectl exec -ti $pod_id -- bash
 }
+
+function g() {
+  if [[ $# -gt 0 ]]; then
+    git "$@"
+  else
+    git status --branch
+  fi
+}
+
+__git_complete g _git
+
+function run_until_pass() {
+  while true; do
+    $1
+    if [ $? -eq 0 ]; then
+      break
+    fi
+  done
+}
+
+function run_until_fail() {
+  while true; do
+    $1
+  done
+}
+
+last_migration(){
+    vim db/migrate/$(ls db/migrate/ | sort | tail -1)
+}
+
+function docker-connect() {
+  eval "$(docker-machine env $1)"
+}
+
+# docker-osx-dev
+function docker_init() {
+  eval "$(boot2docker shellinit)"
+}
+
+function docker_clean() {
+  docker images -q --filter "dangling=true" | xargs docker rmi --force
+  docker ps -q -a | xargs docker rm --force
+}
+
+function ag-rails() {
+  ag $1 --ignore spec --ignore features --ignore doc --ignore db --ignore config
+}
+
+function add_to_path() {
+  export PATH="$PATH:$(pwd)/bin"
+}
+
+function adb_install_all() {
+  adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {} install $1
+}
+
+function source_bash() {
+  source ~/.bashrc
+}
+
+function resque() {
+  QUEUE=* bundle exec rake environment resque:work
+}
+

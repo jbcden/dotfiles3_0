@@ -1,5 +1,7 @@
 #!/bin/sh
 
+git submodule update --remote
+
 for name in $(ls configs/); do
   target="$HOME/.$name"
   if [ -e "$target" ]; then
@@ -35,7 +37,4 @@ fi
 
 mkdir -p ~/.psql
 
-# if [ ! -e "$target" ]; then
-#   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# fi
-# vim -u ~/.vimrc +BundleInstall +qa
+vim -u ~/.vimrc +PackInitInstall

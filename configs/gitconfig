@@ -24,7 +24,7 @@
   ctags = !.git/hooks/ctags
 
 [core]
-	excludesfile = /Users/jchae/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
 [merge]
   #ff = only
