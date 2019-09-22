@@ -190,6 +190,7 @@ export EDITOR=nvim
 alias vim=nvim
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null; then export PATH="$HOME/.rbenv/bin:$PATH"; fi
 
 export PATH=$PATH:/usr/local/opt/go/libexec/bin:/usr/local/bin
 PATH=$PATH:/Users/jacobc/.multirust/toolchains/stable/cargo/bin
