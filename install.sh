@@ -1,6 +1,7 @@
 #!/bin/sh
 
-git submodule update --remote
+git submodule update --remote --recursive --init
+
 
 for name in $(ls configs/); do
   target="$HOME/.$name"
