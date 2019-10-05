@@ -64,10 +64,6 @@ function ag-rails() {
   ag $1 --ignore spec --ignore features --ignore doc --ignore db --ignore config
 }
 
-function add_to_path() {
-  export PATH="$PATH:$(pwd)/bin"
-}
-
 function adb_install_all() {
   adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {} install $1
 }
@@ -79,4 +75,3 @@ function source_bash() {
 function resque() {
   QUEUE=* bundle exec rake environment resque:work
 }
-

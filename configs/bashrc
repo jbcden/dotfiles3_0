@@ -88,6 +88,14 @@ case "$TERM" in
   xterm-color) color_prompt=yes;;
 esac
 
+# We define this here so that it is available for use in this file
+function add_to_path() {
+  case ":${PATH:=$1}:" in
+    *:"$1":*)  ;;
+    *) PATH="$1:$PATH"  ;;
+  esac
+}
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.aliases, instead of adding them here directly.
@@ -99,14 +107,14 @@ fi
 
 if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
 
-PATH="$PATH:$HOME/bin"
+add_to_path "$HOME/bin"
 
 export GIT_EDITOR=nvim
 export EDITOR=nvim
 alias vim=nvim
 
 # rbenv setup
-PATH="$HOME/.rbenv/bin:$PATH"
+add_to_path "$HOME/.rbenv/bin"
 if [ -x "$(command -v rbenv)" ]; then
  eval "$(rbenv init -)"
 fi
@@ -117,8 +125,11 @@ if [ -f ~/.bash_functions.sh ]; then
   source ~/.bash_functions.sh
 fi
 
+# NOTE: This is probably not a great idea since cargo might change
+# how this works and this will break.
 if [ -f ~/.cargo/env ]; then
-  source ~/.cargo/env
+  # source ~/.cargo/env
+  add_to_path "$HOME/.cargo/bin"
 fi
 
 if [ -f ~/.bashrc.local ]; then
