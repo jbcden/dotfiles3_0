@@ -36,6 +36,9 @@ else
   echo "pip is not installed, vim deoplete will not be usable until this is fixed"
 fi
 
+# Setup common directories I use
+mkdir ~/software
+mkdir ~/bin
 mkdir -p ~/.psql
 
 vim -u ~/.vimrc +PackInitInstall
