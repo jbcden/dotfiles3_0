@@ -99,8 +99,7 @@ fi
 
 if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
 
-PATH="$PATH:/Users/jacobc/bin"
-
+PATH="$PATH:$HOME/bin"
 
 export GIT_EDITOR=nvim
 export EDITOR=nvim
