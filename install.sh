@@ -41,4 +41,4 @@ mkdir ~/software
 mkdir ~/bin
 mkdir -p ~/.psql
 
-vim -u ~/.vimrc +PackInitInstall
+nvim -u ~/.vimrc +PackInitInstall
