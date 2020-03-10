@@ -155,6 +155,8 @@ nmap <leader>so :source $MYVIMRC<cr>
 " Map original '0' behavior to <leader>0
 nmap <leader>0 <HOME>
 
+autocmd FileType gitcommit :set spell
+
 autocmd Filetype help nmap <buffer> q :q<CR>
 
 " Automatically rebalance windows on vim resize
