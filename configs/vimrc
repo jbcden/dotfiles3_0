@@ -121,6 +121,7 @@ call minpac#add('rust-lang/rust.vim')
 call minpac#add('racer-rust/vim-racer')
 call minpac#add('ElmCast/elm-vim')
 call minpac#add('slim-template/vim-slim')
+call minpac#add('jordwalke/vim-reasonml')
 call minpac#add('neoclide/coc.nvim', { 'branch': 'release' })
 call minpac#add('jparise/vim-graphql')
 " Additional colorschemes
@@ -136,7 +137,7 @@ syntax enable
 set background=dark
 colorscheme minimalist
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " Neomake
 " disable Neomake checks for Java -- this currently isn't setup correctly and
@@ -144,6 +145,8 @@ let g:deoplete#enable_at_startup = 1
 let blacklist = ['java']
 highlight NeomakeWarning ctermfg=227 ctermbg=237
 autocmd! BufWritePost * if index(blacklist, &ft) < 0 | Neomake
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " This allows vim to remember the line you were last on when you reopen a
 " file. You can read a bit more about this at:
