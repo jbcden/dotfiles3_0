@@ -18,10 +18,12 @@ HISTFILESIZE=2000
 [ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
 
 # This is for macos Catalina upgrade
-for file in $(brew --prefix)/etc/bash_completion.d/*
-do
-  source $file
-done
+if command -v brew 2> /dev/null; then
+  for file in $(brew --prefix)/etc/bash_completion.d/*
+  do
+    source $file
+  done
+fi
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
