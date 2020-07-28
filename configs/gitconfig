@@ -42,3 +42,4 @@
 	trustExitCode = true
 [init]
 	templatedir = ~/.git_template
+	defaultBranch = develop
