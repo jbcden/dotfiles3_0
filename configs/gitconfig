@@ -20,7 +20,7 @@
   lp  = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset' --pretty=format:'%Cblue%gd%Cred: %C(yellow)%s'q
   pfl = push --force-with-lease
   pancake = !git fetch && git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})
-  fix = "!f() { vim -p `git diff --name-only | uniq`; }; f"
+  fix = "!f() { nvim -p `git diff --name-only | uniq`; }; f"
   ctags = !.git/hooks/ctags
 
 [core]
@@ -43,3 +43,5 @@
 [init]
 	templatedir = ~/.git_template
 	defaultBranch = develop
+[diff "rails-credentials"]
+	textconv = decrypt-rails-credentials
