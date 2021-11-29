@@ -25,7 +25,7 @@ function g() {
   fi
 }
 
-__git_complete g _git
+__git_complete g __git_main
 
 function run_until_pass() {
   while true; do
