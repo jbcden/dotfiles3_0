@@ -31,7 +31,7 @@
 	tool = kdiff3
 [user]
 	name = Jacob Chae
-	email = jbcden@gmail.com
+	email = jacob.chae@industrialml.com
 [include]
   path = ~/.gitconfig.local
 [difftool "sourcetree"]
@@ -41,7 +41,18 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [init]
-	templatedir = ~/.git_template
+# templatedir = ~/.git_template
 	defaultBranch = develop
 [diff "rails-credentials"]
 	textconv = decrypt-rails-credentials
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/jchae/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/jchae/bin/gh auth git-credential

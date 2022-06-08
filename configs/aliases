@@ -1,7 +1,7 @@
 # Unix
 alias mkdir='mkdir -p'
 alias l='ls -CF'
-alias ls='ls -G'
+alias ls='ls --color'
 alias ll='ls -alF'
 alias la='ls -A'
 alias e="$EDITOR"

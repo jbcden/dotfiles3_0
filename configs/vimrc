@@ -124,12 +124,16 @@ call minpac#add('slim-template/vim-slim')
 call minpac#add('jordwalke/vim-reasonml')
 call minpac#add('neoclide/coc.nvim', { 'branch': 'release' })
 call minpac#add('jparise/vim-graphql')
+call minpac#add('elixir-editors/vim-elixir')
 " Additional colorschemes
 call minpac#add('dikiaap/minimalist')
 call minpac#add('endel/vim-github-colorscheme')
 call minpac#add('fatih/vim-go')
 call minpac#add('leafgarland/typescript-vim')
 call minpac#add('peitalin/vim-jsx-typescript')
+call minpac#add('iamcco/coc-tailwindcss')
+call minpac#add('tpope/vim-dadbod')
+call minpac#add('kristijanhusak/vim-dadbod-ui')
 
 syntax enable
 set background=light
