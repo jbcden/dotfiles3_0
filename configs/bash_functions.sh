@@ -75,3 +75,11 @@ function source_bash() {
 function resque() {
   QUEUE=* bundle exec rake environment resque:work
 }
+
+function weather() {
+  if [[ $# -gt 0 ]]; then
+    curl -s wttr.in/"$@"
+  else
+    curl -s wttr.in
+  fi
+}
