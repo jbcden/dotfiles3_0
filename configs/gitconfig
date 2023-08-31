@@ -31,7 +31,7 @@
 	tool = kdiff3
 [user]
 	name = Jacob Chae
-	email = jacob.chae@industrialml.com
+	email = jbcden@gmail.com
 [include]
   path = ~/.gitconfig.local
 [difftool "sourcetree"]
@@ -56,3 +56,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/home/jchae/bin/gh auth git-credential
+[includeIf "gitdir:~/woven/"]
+  path = ~/woven/.gitconfig

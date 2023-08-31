@@ -134,14 +134,16 @@ call minpac#add('peitalin/vim-jsx-typescript')
 call minpac#add('iamcco/coc-tailwindcss')
 call minpac#add('tpope/vim-dadbod')
 call minpac#add('kristijanhusak/vim-dadbod-ui')
+call minpac#add('rodjek/vim-puppet')
+call minpac#add('nvim-lua/plenary.nvim')
 
 syntax enable
-" set background=light
-" colorscheme github
+set background=light
+colorscheme github
 
 " Settings for a dark theme
-set background=dark
-colorscheme minimalist
+" set background=dark
+" colorscheme minimalist
 
 " let g:deoplete#enable_at_startup = 1
 
